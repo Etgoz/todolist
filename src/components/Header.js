@@ -1,10 +1,21 @@
 import React from "react";
 
-export default function Header() {
+export function Header({ title, onAddItem }) {
+	function handleKeyDown(event) {
+		if (event.key === "Enter") {
+			return onAddItem(event.target.value);
+		}
+	}
+
 	return (
-		<header class="header">
-			<h1>todos</h1>
-			<input class="new-todo" placeholder="What needs to be done?" autofocus />
+		<header className="header">
+			<h1>{title}</h1>
+			<input
+				className="new-todo"
+				onKeyDown={handleKeyDown}
+				placeholder="What needs to be done?"
+				autoFocus
+			/>
 		</header>
 	);
 }

@@ -1,14 +1,14 @@
 import React from "react";
 
-export default function TaskItem() {
+export default function TaskItem({ item }) {
 	return (
 		<li>
-			<div class="view">
-				<input class="toggle" type="checkbox" />
-				<label>Todo Title</label>
-				<button class="destroy" />
+			<div className="view">
+				<input className="toggle" type="checkbox" />
+				<label>{item.title}</label>
+				<button className="destroy" />
 			</div>
-			<input class="edit" />
+			<input className="edit" />
 		</li>
 	);
 }
