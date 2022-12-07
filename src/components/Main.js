@@ -1,12 +1,12 @@
 import React from "react";
 
-export function Main({ items, onRemove, onComplete }) {
+export function Main({ items, onRemove, onComplete, onToggleAll }) {
 	function handleDestroyClick(event) {
 		const clickedTaskTitle =
 			event.target.parentElement.querySelector("label").textContent;
 		items.forEach((item) => {
 			if (item.title === clickedTaskTitle) {
-				return onRemove(items.indexOf(item));
+				onRemove(item);
 			}
 		});
 	}
@@ -17,14 +17,22 @@ export function Main({ items, onRemove, onComplete }) {
 			event.target.parentElement.querySelector("label").textContent;
 		items.forEach((item) => {
 			if (item.title === clickedTaskTitle) {
-				return onComplete(items.indexOf(item), isChecked);
+				onComplete(item, isChecked);
 			}
 		});
 	}
 
+	function handleToggleAll(event) {
+		onToggleAll(event.target.checked);
+	}
+
 	return (
 		<section className="main">
-			<input className="toggle-all" type="checkbox" />
+			<input
+				className="toggle-all"
+				type="checkbox"
+				onChange={handleToggleAll}
+			/>
 			<ul className="todo-list">
 				{items.map((item) => (
 					<li>

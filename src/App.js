@@ -2,37 +2,43 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
-import { toHaveFormValues } from "@testing-library/jest-dom/dist/matchers";
+import { useState } from "react";
 
 function App() {
 	const appTitle = "TodosApp";
 
-	const todos = [
-		{ title: "Learn React", completed: false },
-		{ title: "Listen to Nir React", completed: false },
-		{ title: "Learn JS", completed: true },
+	let todos = [
+		{ id: Date.now(), title: "Learn React", completed: false },
+		{ id: Date.now() + 1, title: "Listen to Nir React", completed: false },
+		{ id: Date.now() + 2, title: "Learn JS", completed: false },
 	];
 
 	// Events
 	const addTodo = (title) => {
-		todos.push({ title, completed: false });
+		todos = todos.concat([{ id: Date.now(), title, completed: false }]);
 		console.log(todos);
 	};
 
-	const removeTodo = (index) => {
-		todos.splice(index, 1);
+	const removeTodo = (todoToRemove) => {
+		todos = todos.filter((currentTodo) => currentTodo.id !== todoToRemove.id);
 		console.log(todos);
 	};
 
 	// todo: where should we implemnt it?
-	const markAsCompleted = (index, checkFlag) => {
-		todos[index].completed = checkFlag;
+	const markAsCompleted = (todoToComplete, checkFlag) => {
+		todoToComplete.completed = checkFlag;
 		console.log(todos);
 	};
 
-	const clearAllCompleted = () => {};
+	const clearAllCompleted = () => {
+		todos = todos.filter((currentTodo) => !currentTodo.completed);
+		console.log(todos);
+	};
 
-	const toggleAll = () => {};
+	const toggleAll = (checkedValue) => {
+		todos = todos.map((todo) => ({ ...todo, completed: checkedValue }));
+		console.log(todos);
+	};
 
 	// todo: pass title, placeholder to header
 	// todo: pass item left to footer
@@ -46,8 +52,13 @@ function App() {
 				onAddItem={addTodo}
 				text="What needs to be done?"
 			/>
-			<Main items={todos} onRemove={removeTodo} onComplete={markAsCompleted} />
-			<Footer />
+			<Main
+				items={todos}
+				onRemove={removeTodo}
+				onComplete={markAsCompleted}
+				onToggleAll={toggleAll}
+			/>
+			<Footer onClearAll={clearAllCompleted} itemsLeftCount={4} />
 		</section>
 	);
 }

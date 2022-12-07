@@ -1,12 +1,14 @@
 import React from "react";
 
-export function Footer() {
+export function Footer({ onClearAll, itemsLeftCount }) {
 	return (
 		<footer className="footer">
 			<span className="todo-count">
-				<strong>0</strong> items left
+				<strong>{itemsLeftCount}</strong> items left
 			</span>
-			<button className="clear-completed">Clear completed</button>
+			<button className="clear-completed" onClick={onClearAll}>
+				Clear completed
+			</button>
 		</footer>
 	);
 }
