@@ -1,6 +1,12 @@
 import React from "react";
 
-export function Main({ items, onRemove, onComplete, onToggleAll }) {
+export function Main({
+	items,
+	onRemove,
+	onComplete,
+	onToggleAll,
+	onStartEdit,
+}) {
 	function handleDestroyClick(event) {
 		const clickedTaskTitle =
 			event.target.parentElement.querySelector("label").textContent;
@@ -35,12 +41,14 @@ export function Main({ items, onRemove, onComplete, onToggleAll }) {
 			/>
 			<ul className="todo-list">
 				{items.map((item) => (
-					<li>
+					<li className={item.completed ? "completed" : ""}>
 						<div className="view">
 							<input
 								className="toggle"
 								type="checkbox"
+								checked={item.completed}
 								onClick={handleCompleteClick}
+								onDoubleClick={onStartEdit}
 							/>
 							<label>{item.title}</label>
 							<button className="destroy" onClick={handleDestroyClick} />

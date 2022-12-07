@@ -7,9 +7,14 @@ import { useEffect, useState } from "react";
 function App() {
 	const appTitle = "TodosApp";
 	const [todos, setTodos] = useState([]);
-	const [conetNotCompleted, setNotCompleted] = useState(0);
+	const [notCompleted, setNotCompleted] = useState(0);
 
-	useEffect;
+	console.log(todos);
+
+	useEffect(() => {
+		const uncompleted = todos.filter((task) => !task.completed);
+		setNotCompleted(uncompleted.length);
+	}, [todos]);
 
 	// Events
 	const addTodo = (title) => {
@@ -27,10 +32,10 @@ function App() {
 	};
 
 	// todo: where should we implemnt it?
-	const markAsCompleted = (todoToComplete, checkFlag) => {
-		todoToComplete.completed = checkFlag;
-		setTodos(todos);
-		console.log(todos);
+	const markAsCompleted = (taskToComplete, checkFlag) => {
+		taskToComplete.completed = checkFlag;
+		const newTodos = [...todos];
+		setTodos(newTodos);
 	};
 
 	const clearAllCompleted = () => {
@@ -44,6 +49,10 @@ function App() {
 			completed: checkedValue,
 		}));
 		setTodos(newTodos);
+	};
+
+	const enterEditMode = (event) => {
+		event.parentElement.parentElement.className.toggle("editing");
 	};
 
 	// todo: pass title, placeholder to header
@@ -63,8 +72,9 @@ function App() {
 				onRemove={removeTodo}
 				onComplete={markAsCompleted}
 				onToggleAll={toggleAll}
+				onStartEdit={enterEditMode}
 			/>
-			<Footer onClearAll={clearAllCompleted} itemsLeftCount={todos.length} />
+			<Footer onClearAll={clearAllCompleted} itemsLeftCount={notCompleted} />
 		</section>
 	);
 }
