@@ -2,42 +2,48 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
 	const appTitle = "TodosApp";
+	const [todos, setTodos] = useState([]);
+	const [conetNotCompleted, setNotCompleted] = useState(0);
 
-	let todos = [
-		{ id: Date.now(), title: "Learn React", completed: false },
-		{ id: Date.now() + 1, title: "Listen to Nir React", completed: false },
-		{ id: Date.now() + 2, title: "Learn JS", completed: false },
-	];
+	useEffect;
 
 	// Events
 	const addTodo = (title) => {
-		todos = todos.concat([{ id: Date.now(), title, completed: false }]);
-		console.log(todos);
+		const newTodos = todos.concat([
+			{ id: Date.now(), title, completed: false },
+		]);
+		setTodos(newTodos);
 	};
 
 	const removeTodo = (todoToRemove) => {
-		todos = todos.filter((currentTodo) => currentTodo.id !== todoToRemove.id);
-		console.log(todos);
+		const newTodos = todos.filter(
+			(currentTodo) => currentTodo.id !== todoToRemove.id
+		);
+		setTodos(newTodos);
 	};
 
 	// todo: where should we implemnt it?
 	const markAsCompleted = (todoToComplete, checkFlag) => {
 		todoToComplete.completed = checkFlag;
+		setTodos(todos);
 		console.log(todos);
 	};
 
 	const clearAllCompleted = () => {
-		todos = todos.filter((currentTodo) => !currentTodo.completed);
-		console.log(todos);
+		const newTodos = todos.filter((currentTodo) => !currentTodo.completed);
+		setTodos(newTodos);
 	};
 
 	const toggleAll = (checkedValue) => {
-		todos = todos.map((todo) => ({ ...todo, completed: checkedValue }));
-		console.log(todos);
+		const newTodos = todos.map((todo) => ({
+			...todo,
+			completed: checkedValue,
+		}));
+		setTodos(newTodos);
 	};
 
 	// todo: pass title, placeholder to header
@@ -58,7 +64,7 @@ function App() {
 				onComplete={markAsCompleted}
 				onToggleAll={toggleAll}
 			/>
-			<Footer onClearAll={clearAllCompleted} itemsLeftCount={4} />
+			<Footer onClearAll={clearAllCompleted} itemsLeftCount={todos.length} />
 		</section>
 	);
 }

@@ -2,7 +2,7 @@ import React from "react";
 
 export function Header({ title, onAddItem }) {
 	function handleKeyDown(event) {
-		if (event.key === "Enter") {
+		if (event.key === "Enter" && event.target.value) {
 			const newTask = event.target.value;
 			event.target.value = "";
 			onAddItem(newTask);
