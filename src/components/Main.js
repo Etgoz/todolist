@@ -41,14 +41,16 @@ export function Main({
 			/>
 			<ul className="todo-list">
 				{items.map((item) => (
-					<li className={item.completed ? "completed" : ""}>
+					<li
+						className={item.completed ? "completed" : ""}
+						onDoubleClick={onStartEdit}
+					>
 						<div className="view">
 							<input
 								className="toggle"
 								type="checkbox"
 								checked={item.completed}
 								onClick={handleCompleteClick}
-								onDoubleClick={onStartEdit}
 							/>
 							<label>{item.title}</label>
 							<button className="destroy" onClick={handleDestroyClick} />
@@ -56,7 +58,6 @@ export function Main({
 						<input className="edit" />
 					</li>
 				))}
-				;
 			</ul>
 		</section>
 	);

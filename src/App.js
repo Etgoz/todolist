@@ -52,7 +52,7 @@ function App() {
 	};
 
 	const enterEditMode = (event) => {
-		event.parentElement.parentElement.className.toggle("editing");
+		event.target.className.concat(" editing");
 	};
 
 	// todo: pass title, placeholder to header
