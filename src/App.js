@@ -2,14 +2,13 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Main } from "./components/Main";
 import { Footer } from "./components/Footer";
-import { useEffect, useState } from "react";
+import { TasksList } from "./components/TasksList";
+import React, { useEffect, useState } from "react";
 
 function App() {
 	const appTitle = "TodosApp";
 	const [todos, setTodos] = useState([]);
 	const [notCompleted, setNotCompleted] = useState(0);
-
-	console.log(todos);
 
 	useEffect(() => {
 		const uncompleted = todos.filter((task) => !task.completed);
@@ -51,10 +50,6 @@ function App() {
 		setTodos(newTodos);
 	};
 
-	const enterEditMode = (event) => {
-		event.target.className.concat(" editing");
-	};
-
 	// todo: pass title, placeholder to header
 	// todo: pass item left to footer
 
@@ -67,13 +62,13 @@ function App() {
 				onAddItem={addTodo}
 				text="What needs to be done?"
 			/>
-			<Main
-				items={todos}
-				onRemove={removeTodo}
-				onComplete={markAsCompleted}
-				onToggleAll={toggleAll}
-				onStartEdit={enterEditMode}
-			/>
+			<Main items={todos} onToggleAll={toggleAll}>
+				<TasksList
+					items={todos}
+					onComplete={markAsCompleted}
+					onRemove={removeTodo}
+				/>
+			</Main>
 			<Footer onClearAll={clearAllCompleted} itemsLeftCount={notCompleted} />
 		</section>
 	);
