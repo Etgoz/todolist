@@ -25,14 +25,21 @@ export function TasksList({ items, onComplete, onRemove, onDblClick }) {
 		});
 	}
 
-	function handleStartEdit(ev) {
-		setEditable(true);
-		ev.target.className.concat(`${editable ? " editing" : ""}`);
+	function handleStartEdit(ev, item) {
+		if (!editable) {
+			setEditable(true);
+			ev.target.parentElement.parentElement.className += "editing";
+			ev.target.parentElement.parentElement.querySelector(".edit").value =
+				item.title;
+		}
 	}
 
-	function handleFinishEdit(event) {
+	function handleFinishEdit(event, item) {
 		if (event.key === "Enter") {
 			setEditable(false);
+			item.title = event.target.value;
+			event.target.parentElement.querySelector("label").innerHTML = item.title;
+			document.querySelector(".editing").classList.remove("editing");
 		}
 	}
 
@@ -41,8 +48,8 @@ export function TasksList({ items, onComplete, onRemove, onDblClick }) {
 			{items.map((item) => (
 				<li
 					className={`${item.completed ? "completed" : ""}`}
-					onDoubleClick={handleStartEdit}
-					onKeyDown={handleFinishEdit}
+					onDoubleClick={(ev) => handleStartEdit(ev, item)}
+					onKeyDown={(ev) => handleFinishEdit(ev, item)}
 				>
 					<div className="view">
 						<input
