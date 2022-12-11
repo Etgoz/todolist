@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ListContext } from "../providers/ListContext";
 
-export function Header({ title, onAddItem }) {
+export function Header({ title }) {
+	const { addTodo } = useContext(ListContext);
+
 	function handleKeyDown(event) {
 		if (event.key === "Enter" && event.target.value) {
 			const newTask = event.target.value;
 			event.target.value = "";
-			onAddItem(newTask);
+			addTodo(newTask);
 		}
 	}
 
