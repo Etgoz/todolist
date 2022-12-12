@@ -5,7 +5,7 @@ export function Footer() {
 	const { clearAllCompleted, notCompleted } = useContext(ListContext);
 
 	return (
-		<footer className="footer">
+		<footer className="footer" style={{ boxSizing: "content-box" }}>
 			<span className="todo-count">
 				<strong>{notCompleted}</strong> items left
 			</span>

@@ -14,7 +14,7 @@ export function Header({ title }) {
 
 	return (
 		<header className="header">
-			<h1>{title}</h1>
+			<h1 className="mt-4">{title}</h1>
 			<input
 				className="new-todo"
 				onKeyDown={handleKeyDown}
