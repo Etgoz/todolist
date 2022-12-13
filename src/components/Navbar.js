@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export function Navbar() {
+	const { currentUser, setCurrentUser } = useContext(AuthContext);
+	const navigate = useNavigate();
+
+	function handleSignOut() {
+		setCurrentUser(null);
+		navigate("/home");
+	}
+
 	return (
 		<nav className="navbar navbar-expand-lg bg-light">
 			<div className="container-fluid">
@@ -24,10 +34,20 @@ export function Navbar() {
 						<Link className="nav-link" to="/home">
 							Home
 						</Link>
-						<Link className="nav-link" to="/lists">
-							Lists
-						</Link>
+						{currentUser && (
+							<Link className="nav-link" to="/lists">
+								Lists
+							</Link>
+						)}
 					</div>
+				</div>
+				<div className="justify-self-flex-end">
+					{currentUser && (
+						<>
+							<span>Hello {currentUser.name} </span>
+							<button onClick={handleSignOut}>sign out</button>
+						</>
+					)}
 				</div>
 			</div>
 		</nav>
